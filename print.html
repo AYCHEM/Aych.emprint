@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"><!--
 
-    <head>
+Mailpile printout. Complete raw message headers:
 
+{% for hdr, val in result.message.header_list %}
+{{hdr|safe}}: {{val|safe}}
+{% endfor %}
+
+--><head>
         <title>Print message</title>
         <meta name="description" content="">
         <meta charset="utf-8">
@@ -81,9 +86,7 @@
             }
         </style>
 
-    </head>
-
-    <body>
+    </head><body>
 
         <div class="logo">
             <svg version="1.1" id="svg_logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="51.359px" height="36.152px" viewBox="0 0 51.359 36.152" enable-background="new 0 0 51.359 36.152" xml:space="preserve">
@@ -114,15 +117,11 @@
         </div>
 
         <div>
-
             <hr />
-
             <div id="thread-title">
                 <h1>{{result.metadata.subject}}</h1>
             </div>
-
             <hr />
-
             <p>
                 {% for hdr, val in result.message.header_list %}
                   {% if hdr in ('From', 'To', 'Cc', 'Date') %}
@@ -130,13 +129,30 @@
                   {% endif %}
                 {% endfor %}
             </p>
-
-            <p id="message"><tt style="font-size: 12px; line-height: 100%;">{% set message = result.message %}{% set last_enc_context = message.crypto.encryption.context %}{% set last_sig_context = message.crypto.signature.context %}{% if not message.text_parts %}{% for part in message.html_parts %}{{part.data|replace("\\n", "\n")|safe}}{% endfor %}{% endif %}{% for part in message.text_parts %}{% if (part.data != "") %}{% if part.type in ("text", "pgpsignedtext") %}{{ part.data|urlize }}{% elif part.type == "quote" %}<br />&middot;&middot;&middot;&middot;<br />{{ part.data|urlize }}{% elif part.type == "signature" %}{{ part.data|urlize }}{% endif %}{% endif %}{% endfor %}
+            <p id="message"><tt style="font-size: 12px; line-height: 100%;">
+                {%- set message = result.message %}
+                {%- set last_enc_context = message.crypto.encryption.context %}
+                {%- set last_sig_context = message.crypto.signature.context %}
+                {%- if not message.text_parts %}
+                  {%- for part in message.html_parts %}
+                    {{- part.data|replace("\\n", "\n")|safe }}
+                  {%- endfor %}
+                {%- endif %}
+                {%- for part in message.text_parts %}
+                  {%- if (part.data != "") %}
+                    {%- if part.type in ("text", "pgpsignedtext") %}
+                      {{- part.data|urlize }}
+                    {%- elif part.type == "quote" %}
+                      <br />&middot;&middot;&middot;&middot;<br />
+                      {{- part.data|urlize }}
+                    {%- elif part.type == "signature" %}
+                      {{- part.data|urlize }}
+                    {%- endif %}
+                  {%- endif %}
+                {%- endfor %}
             </tt></p>
-
         </div>
 
     </body>
     <script>window.print();</script>
-
 </html>
