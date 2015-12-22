@@ -8,7 +8,8 @@
         "javascript": ["print.js"]
     },
     "routes": {
-        "/message/print/": {"file": "print.html", "api": 0}
+        "/message/print/": {"file": "print.html", "api": 0},
+        "/static/img/print.png": {"file": "print.png"}
     },
     "commands": [
         {
@@ -28,7 +29,7 @@
                 "name": "print",
                 "text": "Print",
                 "description": "Print Message",
-                "icon": "print",
+                "icon": "/static/img/print.png",
                 "url": "/message/print/",
                 "javascript_setup": "setup_print_button"
             }
