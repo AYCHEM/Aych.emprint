@@ -3,6 +3,9 @@
 {
     "name": "print",
     "author": "Mustafa Al-Bassam <mus@musalbas.com>",
+    "description": "Adds a printing-friendly display mode for e-mail.",
+    "display": true,
+    "public": true,
     "code": {
         "python": ["print.py"],
         "javascript": ["print.js"]
