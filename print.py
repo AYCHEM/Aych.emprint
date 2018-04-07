@@ -2,7 +2,7 @@ import datetime
 
 from mailpile.commands import Command
 from mailpile.i18n import gettext as _
-from mailpile.mailutils import Email
+from mailpile.mailutils.emails import Email
 from mailpile.plugins.search import View
 from mailpile.util import *
 
